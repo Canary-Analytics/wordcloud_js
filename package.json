@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "coffee-script": "^1.12.4",
     "word-counter": "^1.0.8"
   },
   "devDependencies": {},

@@ -1,4 +1,7 @@
 const fs = require('fs');
+const WordCounter = require('word-counter');
+
+let wc = new WordCounter();
 
 let text = fs.readFileSync('./tweets.txt',"utf-8");
 let array = text.split(" ")
@@ -51,9 +54,16 @@ for (var i = 0; i < filtered.length; i++)
   }
 }
 
+wc.count(words.join(' '));
+let report = wc.report();
+
+console.log(report);
+
+/*
 fs.writeFileSync('./words.txt',words);
 fs.writeFileSync('./hashtags.txt',hashtag);
 fs.writeFileSync('./users.txt',users);
+*/
 
 console.log(filtered.length);
 console.log(words.length);
