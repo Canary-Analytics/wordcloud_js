@@ -3,55 +3,45 @@ const WordCounter = require('word-counter');
 
 let wc = new WordCounter();
 
-let text = fs.readFileSync('./tweets.txt',"utf-8");
+let text = fs.readFileSync('./tweets.txt', "utf-8");
 let array = text.split(" ")
 //console.log(array);
 console.log(array.length);
 
 
-function stopWords(value, sw)
-{
-  let stopWords = fs.readFileSync('./stopwords/' + sw,"utf-8");
-  let stopWordsArray = stopWords.split(/\r\n|\n/);
-  //console.log(stopWordsArray);
-  let result = [];
+function stopWords(value, sw) {
+    let stopWords = fs.readFileSync('./stopwords/' + sw, "utf-8");
+    let stopWordsArray = stopWords.split(/\r\n|\n/);
+    //console.log(stopWordsArray);
+    let result = [];
 
-  for (let i = 0; i < value.length; i++)
-  {
-    if(!(stopWordsArray.includes(value[i])))
-    {
-      result.push(value[i]);
+    for (let i = 0; i < value.length; i++) {
+        if (!(stopWordsArray.includes(value[i]))) {
+            result.push(value[i]);
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 var arrSw = ["customsw.txt", "stopwords.es", "stop-words_english_1_en.txt", "stop-words_english_2_en.txt", "stop-words_english_3_en.txt", "stop-words_english_4_google_en.txt", "stop-words_english_5_en.txt", "stop-words_english_6_en.txt"];
 var filtered = array;
 
-for (var i = 0; i < arrSw.length; i++)
-{
-  filtered = stopWords(filtered, arrSw[i]);
+for (var i = 0; i < arrSw.length; i++) {
+    filtered = stopWords(filtered, arrSw[i]);
 }
 
 let hashtag = [];
 let users = [];
 let words = [];
 
-for (var i = 0; i < filtered.length; i++)
-{
-  if(filtered[i].startsWith("#"))
-  {
-    hashtag.push(filtered[i]);
-  }
-  else if(filtered[i].startsWith("@"))
-  {
-    users.push(filtered[i]);
-  }
-  else
-  {
-    words.push(filtered[i]);
-  }
+for (var i = 0; i < filtered.length; i++) {
+    if (filtered[i].startsWith("#")) {
+        hashtag.push(filtered[i]);
+    } else if (filtered[i].startsWith("@")) {
+        users.push(filtered[i]);
+    } else {
+        words.push(filtered[i]);
+    }
 }
 
 wc.count(words.join(' '));
@@ -68,7 +58,7 @@ for (i = 0; i < 100; i++) {
 console.log(words_wordcloud);
 
 let output = JSON.stringify(words_wordcloud);
-fs.writeFileSync('./entrada_d3.json',output);
+fs.writeFileSync('./entrada_d3.json', output);
 
 /*
 fs.writeFileSync('./words.txt',words);

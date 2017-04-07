@@ -1,1 +1,0 @@
-require('./entrada_d3.json')
